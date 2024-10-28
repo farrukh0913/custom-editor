@@ -21,6 +21,9 @@
         align-items: center;
         justify-content: left;
         background: #f3f3f3;
+        mat-icon:hover{
+            cursor: pointer;
+        }
         .dropdown{
             margin-left: auto;
             border-left: 1px solid #d7d7d7;;
