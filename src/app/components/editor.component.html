@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <textarea name="editor" id="editor" cols="30" rows="10" [(ngModel)]="inputTextAreaText"></textarea>
+    <textarea name="editor" id="editor" cols="30" rows="10" [(ngModel)]="inputTextAreaText" [ngStyle]="{'font-weight': boldField ? 'bold' : 'normal', 'text-decoration': underlineField ? 'underline' : 'none'}"></textarea>
   </div>
   <div class="row mt-5">
     <label>Interaction box label</label>
