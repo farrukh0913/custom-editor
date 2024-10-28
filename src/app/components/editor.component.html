@@ -1,30 +1,28 @@
-<div class="container">
-  <div class="row">
-    <textarea name="editor" id="editor" cols="30" rows="10" [(ngModel)]="inputTextAreaText" [ngStyle]="{'font-weight': boldField ? 'bold' : 'normal', 'text-decoration': underlineField ? 'underline' : 'none'}"></textarea>
-  </div>
-  <div class="row mt-5">
+<div class="main-container">
+  <textarea name="editor" id="editor" [(ngModel)]="inputTextAreaText" [ngStyle]="{'font-weight': boldField ? 'bold' : 'normal', 'text-decoration': underlineField ? 'underline' : 'none'}"></textarea>
+  <div class=" mt-5">
     <label>Interaction box label</label>
     <div class="input-group">
       <input type="text" class="form-control text-input-field" placeholder="Live interaction" [(ngModel)]="inputFieldText" (ngModelChange)="getRemainingCharacters()" maxlength="300" aria-label="Text input with segmented dropdown button">
       <button type="button" class="btn btn-outline-light dropdown-toggle-split"
         data-bs-toggle="dropdown" aria-expanded="false">
         @if (inputFieldLang === 'en') {
-          <img src="../../assets/icons/english.png" alt="">
+          <img src="../../assets/icons/english.png" alt="" width="25px" height="25px">
         }
         @else {
-          <img src="../../assets/icons/arabic.png" alt="">
+          <img src="../../assets/icons/arabic.png" alt="" width="25px" height="25px">
         }
 
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
         <li>
           <button class="btn w-100" (click)="onLangSelection('en')">
-          <img src="../../assets/icons/english.png" alt="">
+          <img src="../../assets/icons/english.png" alt="" width="25px" height="25px">
           </button>
         </li>
         <li>
           <button class="btn w-100" (click)="onLangSelection('ar')">
-          <img src="../../assets/icons/arabic.png" alt="">
+          <img src="../../assets/icons/arabic.png" alt="" width="25px" height="25px">
           </button>
         </li>
       </ul>
