@@ -22,35 +22,17 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-root',
+  selector: 'editor-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, CKEditorModule, FormsModule, MatIconModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [CommonModule, RouterOutlet, FormsModule],
+  templateUrl: './editor.component.html',
+  styleUrl: './editor.component.scss'
 })
-export class AppComponent {
+export class EditorComponent {
   title = 'text-editor';
   lang: string = "en";
   inputText: string = "";
   remainingText: number = 0;
-  public Editor = ClassicEditor;
-  public config = {
-    toolbar: [
-      'bold',
-      'underline',
-      'link',
-      'bulletedList',
-      'numberedList'
-    ],
-    plugins: [
-      Bold,
-      Link,
-      List,
-      Paragraph,
-      Underline
-    ],
-  }
-
   americanFlagSVG = `
                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
                     <image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAqlJREFUWEftVl1IU2EYfrYm88y16dn8ba5ZRlrOUpDVMBEN6ecipZCiC6GgVqI5dZFd1DKQYFDQH/RHdFPCqOzCgqiwjMokRa3VRcpqQ93Ypptjczp2Yl8YGd2c08Audq4O5/me932+5zy838fDEj+8Je6PuIC4A8SBe63XO2ZCkUK2gdRIveOqpKCfLS+6npcotEj0bTeJAMO+G4H3s1kU20JtQTNK5y1saWR9JF9tl1y+lU0EtB4yT6+v2CAdHHFj3BHA7p0q3O+2IitdhCK1DJ1dY9hbvQpR3Dszh6ryFbj7YAz19CBKJU5uAmQZQ8l6w0YiQHei17a9XKkY+exB36ALplMlMLT3Q1MkhzqfxvlrH9F8uABRfMIZRF1tLo6f7UezLg/aEjknAQwDcyotrSUCGhq6HcN2pIkoAQLBMCm48P63bwkJfLKmqSwMbQ6n/mCEwheyrVWVvzIwQa+hzhiKcdo0gMJ1NLZsyoDRNACjoRi97yYxbPFgAd+1TUm6Lr/SHpsM6A90TlsCydKaHSvx8PE3qLLFyEgToefNBMq1mZh0BmC1+bGAF+SlEAGVnp7YZWAuBMV3ux/z4QjycqX48tWLBAEfSoUYo1YfVqsk+BNvORKjDDQ1PXEcbdSmve5zkF3fuViGusZXZPelmnQ0nHyLSx2bEcWtthm06Aqwv/4ldJpQ7DIwSuVQkQgDfyAMOZ0Il2cWYpEAfD4P7qkQZClCRPH5MIMkSgCHK4iYzYGrx26P26eRyTbPNXIb1lJetrSfg+j3OeCa8pkBZg+nShxJi+aA+9nT57xQqIJjLU60RXPA13jQxv80ouBUiSNp0VkwdcE0tMw9yfo05Ng7ngHiwP+VAZ+x7RE8zuJ/+adsuQyd+kFqPFcdv5TGHYg7sOQO/AAGYT4wfTlV/AAAAABJRU5ErkJggg==" x="0" y="0" width="32" height="32"/>
@@ -61,10 +43,6 @@ export class AppComponent {
             </svg>`;
 
   constructor(private http: HttpClient) {}
-
-  onReady(editor: any) {
-    this.addTranslateButton(editor);
-  }
 
   addTranslateButton(editor: any) {
     if (editor && editor.ui) {

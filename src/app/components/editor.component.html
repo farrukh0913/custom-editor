@@ -1,23 +1,6 @@
-
-<div class="flex">
-  <mat-icon> format_bold</mat-icon>
-  <mat-icon> format_underlined</mat-icon>
-  <mat-icon> insert_link</mat-icon>
-  <mat-icon> format_list_bulleted</mat-icon>
-  <mat-icon> format_list_numbered</mat-icon>
-</div>
-
-
-<button >Test Button</button>
-
-
 <div class="container">
-
-
-  <div class="row mt-5">
-    <label>Description</label>
-    <ckeditor [editor]="Editor" [config]="config" (ready)="onReady($event)">
-    </ckeditor>
+  <div class="row">
+    <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
   </div>
   <div class="row mt-5">
     <label>Interaction box label</label>

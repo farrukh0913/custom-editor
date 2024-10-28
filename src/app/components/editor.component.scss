@@ -1,27 +1,3 @@
-::ng-deep {
-    .ck-editor__editable_inline {
-        min-height: 300px !important;
-    }
-
-    .ck.ck-icon.ck-reset_all-excluded.ck-icon_inherit-color.ck-dropdown__arrow {
-        display: none;
-    }
-
-    .ck-dropdown{
-        margin-left: auto !important;
-        border-left: 1px solid #f7f1f1 !important;
-        button:hover{
-            cursor: pointer !important;
-        }
-    }
-}
-
-.btn-outline-light {
-    border-color: #c9c9c9;
-    border-top-right-radius: 5px !important;
-    border-bottom-right-radius: 5px !important;
-}
-
 .text-input-field {
     height: 50px !important;
 }
@@ -30,8 +6,17 @@
     border-color: #3779EB !important;
 }
 
+textarea, .dropdown-toggle-split{
+    border: 1px solid #d7d7d7;
+}
+
 .remaning{
     margin-top: 5px;
     color: #9f9f9f;
     font-size: 12px;
+}
+
+.row textarea {
+    padding: 10px;
+    font-size: 1rem;
 }

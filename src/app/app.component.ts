@@ -20,11 +20,12 @@ import {
 import 'ckeditor5/ckeditor5.css';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { EditorComponent } from './components/editor.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, CKEditorModule, FormsModule, MatIconModule],
+  imports: [CommonModule, RouterOutlet, CKEditorModule, FormsModule, MatIconModule, EditorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

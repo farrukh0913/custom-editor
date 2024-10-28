@@ -1,31 +1,3 @@
-::ng-deep {
-    .ck-editor__editable_inline {
-        min-height: 300px !important;
-    }
-
-    .ck.ck-icon.ck-reset_all-excluded.ck-icon_inherit-color.ck-dropdown__arrow {
-        display: none;
-    }
-
-    .ck-dropdown{
-        margin-left: auto !important;
-        border-left: 1px solid #f7f1f1 !important;
-        button:hover{
-            cursor: pointer !important;
-        }
-    }
-
-    .btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active{
-        border-color: unset !important;
-    }
-}
-
-.btn-outline-light {
-    border-color: #c9c9c9;
-    border-top-right-radius: 5px !important;
-    border-bottom-right-radius: 5px !important;
-}
-
 .text-input-field {
     height: 50px !important;
 }
@@ -40,16 +12,18 @@
     font-size: 12px;
 }
 
-.header{
+.main-container{
     margin: 5% 10%;
     width: 80%;
-    border: 1px solid #d7d7d7;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    background: #f3f3f3;
-    .dropdown{
-        margin-left: auto;
-        border-left: 1px solid #d7d7d7;;
+    .header{
+        border: 1px solid #d7d7d7;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        background: #f3f3f3;
+        .dropdown{
+            margin-left: auto;
+            border-left: 1px solid #d7d7d7;;
+        }
     }
 }
