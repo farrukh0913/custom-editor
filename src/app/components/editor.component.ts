@@ -21,6 +21,8 @@ export class EditorComponent {
   @Input() numberBulletField = false;
 
   inputTextAreaText: string = "";
+  inputFieldText: string = "";
+  inputFieldLang: string = "en";
   remainingText: number = 0;
   previousLang: string = 'en';
 
@@ -31,10 +33,10 @@ export class EditorComponent {
     if(this.inputTextAreaText && this.langField !== this.previousLang){
       const distinctLang = this.langField === 'ar' ? 'en' : 'ar';
       this.translationService.translate(this.inputTextAreaText, distinctLang, this.langField).pipe().subscribe((translation: any) => {
+        console.log('translation: ', translation);
         if(translation?.responseData?.translatedText){
           this.inputTextAreaText = translation?.responseData?.translatedText;
           this.previousLang = this.langField;
-          this.getRemainingCharacters();
         }
       }, (error: any) => {
         console.log('Error in Fetching Translation: ', error);
@@ -43,23 +45,22 @@ export class EditorComponent {
   }
 
   getRemainingCharacters(){
-    this.remainingText = 300 - this.inputTextAreaText.length;
+    this.remainingText = 300 - this.inputFieldText.length;
   }
 
   onLangSelection(selectedLanguage: string){
-    console.log('onLangSelection: ');
-  }
-
-  translationOnInput(language: string) {
-    // this.lang = language;
-    // const distinctLang = language === 'ar' ? 'en' : 'ar';
-    // const content = this.inputText;
-    // const apiUrl = `https://api.mymemory.translated.net/get?q=${content}&langpair=${distinctLang}|${language}`;
-    // if (content){
-    //   this.http.get<any>(apiUrl).subscribe(translatedText => {
-    //     this.inputText = translatedText?.responseData?.translatedText;
-    //     this.getRemainingCharacters();
-    //   });
-    // }
+    this.inputFieldLang = selectedLanguage;
+    if(this.inputFieldText && this.inputFieldLang){
+      const distinctLang = this.inputFieldLang === 'ar' ? 'en' : 'ar';
+      this.translationService.translate(this.inputFieldText, distinctLang, this.inputFieldLang).pipe().subscribe((translation: any) => {
+        console.log('translation: ', translation);
+        if(translation?.responseData?.translatedText){
+          this.inputFieldText = translation?.responseData?.translatedText;
+          this.getRemainingCharacters();
+        }
+      }, (error: any) => {
+        console.log('Error in Fetching Translation: ', error);
+      });
+    }
   }
 }
