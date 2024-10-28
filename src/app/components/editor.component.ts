@@ -28,8 +28,12 @@ export class EditorComponent {
 
   constructor(private readonly translationService: TranslationService) {}
 
-
+/**
+ * get changed variables coming from parent component
+ * @param changes Changes in input decorators
+ */
   ngOnChanges(changes: SimpleChanges) {
+    //    * On language change for Text Area field
     if(this.inputTextAreaText && this.langField !== this.previousLang){
       const distinctLang = this.langField === 'ar' ? 'en' : 'ar';
       this.translationService.translate(this.inputTextAreaText, distinctLang, this.langField).pipe().subscribe((translation: any) => {
@@ -44,10 +48,17 @@ export class EditorComponent {
     }
   }
 
+  /**
+   * get remaining characters
+   */
   getRemainingCharacters(){
     this.remainingText = 300 - this.inputFieldText.length;
   }
 
+  /**
+   * On language change for text field
+   * @param selectedLanguage selected language
+   */
   onLangSelection(selectedLanguage: string){
     this.inputFieldLang = selectedLanguage;
     if(this.inputFieldText && this.inputFieldLang){
