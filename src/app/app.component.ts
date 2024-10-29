@@ -20,6 +20,7 @@ export class AppComponent {
   bulletField: boolean = false;
   numberBulletField: boolean = false;
   langField: string = 'en';
+  actionCommand: string = '';
 
   constructor() {}
 
@@ -29,28 +30,23 @@ export class AppComponent {
   }
 
   onBoldSelecttion(){
-    this.boldField = !this.boldField;
-    console.log('this.boldField: ', this.boldField);
+    this.actionCommand = 'bold';
   }
 
   onUnderlineSelection(){
-    this.underlineField = !this.underlineField;
-    console.log('this.underlineField: ', this.underlineField);
+    this.actionCommand = 'underline';
   }
 
   onLinkSelection(){
-    this.linkField = !this.linkField;
-    console.log('this.linkField: ', this.linkField);
+    this.actionCommand = 'linkSelection';
   }
 
   onBulletSelecttion(){
-    this.bulletField = !this.bulletField;
-    console.log('this.bulletField: ', this.bulletField);
+    this.actionCommand = 'insertUnorderedList';
   }
 
   onNumberBulletSelecttion(){
-    this.numberBulletField = !this.numberBulletField;
-    console.log('this.numberBulletField: ', this.numberBulletField);
+    this.actionCommand = 'insertOrderedList';
   }
 
 }

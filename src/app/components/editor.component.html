@@ -1,5 +1,5 @@
 <div class="main-container">
-  <textarea name="editor" id="editor" [(ngModel)]="inputTextAreaText" [ngStyle]="{'font-weight': boldField ? 'bold' : 'normal', 'text-decoration': underlineField ? 'underline' : 'none'}"></textarea>
+  <div #editor class="editor-content" contenteditable="true" id="editor"></div>
   <div class=" mt-5">
     <label>Interaction box label</label>
     <div class="input-group">
