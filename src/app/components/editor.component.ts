@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslationService } from '../translation.service';
@@ -16,17 +16,19 @@ export class EditorComponent {
   @ViewChild('editor') editorRef!: ElementRef<HTMLDivElement>;
   @Input() langField = 'en';
   @Input() actionCommand = '';
-  @Input() boldField = false;
-  @Input() underlineField = false;
-  @Input() linkField = false;
-  @Input() bulletField = false;
-  @Input() numberBulletField = false;
+  @Output() activeEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   inputTextAreaText: string = "";
   inputFieldText: string = "";
   inputFieldLang: string = "en";
   remainingText: number = 0;
   previousLang: string = 'en';
+  commandState = {
+    bold: false,
+    underline: false,
+    insertUnorderedList: false,
+    insertOrderedList: false
+  };
 
   constructor(private readonly translationService: TranslationService) {}
 
@@ -36,6 +38,13 @@ export class EditorComponent {
         this.insertLink();
       } else {
         this.formatText(this.actionCommand);
+        this.commandState = {
+          bold: document.queryCommandState('bold'),
+          underline: document.queryCommandState('underline'),
+          insertUnorderedList: document.queryCommandState('insertUnorderedList'),
+          insertOrderedList: document.queryCommandState('insertOrderedList')
+        }
+        this.activeEmitter.emit(this.commandState);
       }
     }
   }
@@ -48,10 +57,8 @@ export class EditorComponent {
     //    * On language change for Text Area field
     if(this.editorRef?.nativeElement.innerText && this.langField !== this.previousLang){
       let content = `<p>${this.editorRef?.nativeElement.innerHTML}</p>`;
-      console.log('this.langField: ', this.langField);
       const distinctLang = this.langField === 'ar' ? 'en' : 'ar';
       this.translationService.translate(content, distinctLang, this.langField).pipe().subscribe((translation: any) => {
-        console.log('translation: ', translation);
         if(translation?.responseData?.translatedText){
           this.editorRef.nativeElement.innerHTML = translation?.responseData?.translatedText;
           this.previousLang = this.langField;
@@ -95,7 +102,6 @@ export class EditorComponent {
     if(this.inputFieldText && this.inputFieldLang){
       const distinctLang = this.inputFieldLang === 'ar' ? 'en' : 'ar';
       this.translationService.translate(`<p>${this.inputFieldText}</p>`, distinctLang, this.inputFieldLang).pipe().subscribe((translation: any) => {
-        console.log('translation: ', translation);
         if(translation?.responseData?.translatedText){
           this.inputFieldText = translation?.responseData?.translatedText.replace(/<\/?p>/g, '');
           this.getRemainingCharacters();

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,19 +14,14 @@ import { EditorComponent } from './components/editor.component';
 })
 
 export class AppComponent {
-  boldField: boolean = false;
-  underlineField: boolean = false;
-  linkField: boolean = false;
-  bulletField: boolean = false;
-  numberBulletField: boolean = false;
   langField: string = 'en';
   actionCommand: string = '';
 
-  constructor() {}
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   onLangSelection(selectedLanguage: string){
+    this.actionCommand = '';
     this.langField = selectedLanguage;
-    console.log('this.langField: ', this.langField);
   }
 
   onBoldSelecttion(){
@@ -49,4 +44,10 @@ export class AppComponent {
     this.actionCommand = 'insertOrderedList';
   }
 
+  activeAction(event: any) {
+    this.renderer.setStyle(this.el.nativeElement.querySelector('.bold'), 'color', event.bold ? '#1469C0' : '');
+    this.renderer.setStyle(this.el.nativeElement.querySelector('.underline'), 'color', event.underline ? '#1469C0' : '');
+    this.renderer.setStyle(this.el.nativeElement.querySelector('.insertUnorderedList'), 'color', event.insertUnorderedList ? '#1469C0' : '');
+    this.renderer.setStyle(this.el.nativeElement.querySelector('.insertOrderedList'), 'color', event.insertOrderedList ? '#1469C0' : '');
+  }
 }
