@@ -23,11 +23,22 @@ export class EditorComponent {
   inputFieldLang: string = "en";
   remainingText: number = 0;
   previousLang: string = 'en';
+  editorTextDirection: 'ltr' | 'rtl' = 'ltr';
+  inputTextDirection: 'ltr' | 'rtl' = 'ltr';
   commandState = {
     bold: false,
     underline: false,
     insertUnorderedList: false,
     insertOrderedList: false
+  };
+
+  private latinToArabicMap: { [key: string]: string } = {
+    a: 'ا',   b: 'ب',   t: 'ت',   j: 'ج',   h: 'ح',   k: 'ك',   d: 'د',   r: 'ر',   s: 'س',
+    q: 'ق',   w: 'و',   e: 'ئ',   f: 'ف',   g: 'غ',   z: 'ز',   x: 'خ',   c: 'چ',   v: 'پ',   n: 'ن',
+    m: 'م',   y: 'ي',   o: 'ؤ',   p: 'ة',   i: 'ي',   l: 'ل',   u: 'ؤ',   ';': '؛', 
+    A: 'ا',   B: 'ب',   T: 'ت',   J: 'ج',   H: 'ح',   K: 'ك',   D: 'د',   R: 'ر',   S: 'س',
+    Q: 'ق',   W: 'و',   E: 'ئ',   F: 'ف',   G: 'غ',   Z: 'ز',   X: 'خ',   C: 'چ',   V: 'پ',   N: 'ن',
+    M: 'م',   Y: 'ي',   O: 'ؤ',   P: 'ة',   I: 'ي',   L: 'ل',   U: 'ؤ', '.': 'ۖ',
   };
 
   constructor(private readonly translationService: TranslationService) {}
@@ -67,6 +78,7 @@ export class EditorComponent {
         console.log('Error in Fetching Translation: ', error);
       });
     }
+    this.editorTextDirection = this.langField === 'ar' ? 'rtl' : 'ltr';
   }
 
   formatText(command: string) {
@@ -110,5 +122,61 @@ export class EditorComponent {
         console.log('Error in Fetching Translation: ', error);
       });
     }
+    this.inputTextDirection = selectedLanguage === 'ar' ? 'rtl' : 'ltr';
+  }
+
+  handleKeyDown(event: KeyboardEvent) {
+    if (this.langField === 'ar') {
+      const char = event.key.toLowerCase();
+      if (this.latinToArabicMap[char]) {
+        event.preventDefault();
+        this.insertText(this.latinToArabicMap[char]);
+      }
+    }
+  }
+  
+  insertText(text: string) {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
+  
+    const range = selection.getRangeAt(0);
+    range.deleteContents(); // Remove selected text, if any
+  
+    // Create a text node for the Arabic character
+    const textNode = document.createTextNode(text);
+    range.insertNode(textNode); // Insert the Arabic character
+  
+    // Move the caret after the inserted text
+    range.setStartAfter(textNode);
+    range.collapse(true); // Collapse the range to the end of the inserted text
+  
+    // Clear the current selection and set the new range
+    selection.removeAllRanges();
+    selection.addRange(range);
+  
+    // Focus back on the editor
+    this.editorRef.nativeElement.focus();
+  }
+  
+  handleInputKeyDown(event: KeyboardEvent) {
+    if (this.inputTextDirection === 'rtl') {
+      const char = event.key.toLowerCase();
+      if (this.latinToArabicMap[char]) {
+        event.preventDefault();
+        this.insertInputText(event, this.latinToArabicMap[char]);
+      }
+    }
+  }
+
+  insertInputText(event: KeyboardEvent, text: string) {
+    const inputElement = event.target as HTMLInputElement;
+    const start = inputElement.selectionStart || 0;
+    const end = inputElement.selectionEnd || 0;
+    this.inputFieldText = this.inputFieldText.substring(0, start) + text + this.inputFieldText.substring(end);
+    this.getRemainingCharacters();
+    setTimeout(() => {
+      inputElement.setSelectionRange(start + text.length, start + text.length);
+      inputElement.focus();
+    }, 0);
   }
 }

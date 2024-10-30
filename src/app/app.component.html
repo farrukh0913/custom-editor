@@ -20,12 +20,12 @@
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
       <li>
-        <button class="btn w-100" (click)="onLangSelection('en')">
+        <button class="btn w-100" [ngStyle]="{'border-color': langField === 'en' ? '#3779EB' : ''}" (click)="onLangSelection('en')">
           <img src="../../assets/icons/english.png" alt="" width="25px" height="25px">
         </button>
       </li>
       <li>
-        <button class="btn w-100" (click)="onLangSelection('ar')">
+        <button class="btn w-100" [ngStyle]="{'border-color': langField === 'ar' ? '#3779EB' : ''}" (click)="onLangSelection('ar')">
           <img src="../../assets/icons/arabic.png" alt="" width="25px" height="25px">
         </button>
       </li>
