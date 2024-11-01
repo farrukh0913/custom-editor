@@ -1,0 +1,37 @@
+<div class="main-container">
+    <span>Description</span>
+    <div class="header">
+      <div class="d-flex flex-row" style="width: 200px;">
+        <mat-icon (click)="actionPerform('bold')" class="bold"> format_bold</mat-icon>
+        <mat-icon (click)="actionPerform('underline')" class="underline"> format_underlined</mat-icon>
+        <mat-icon (click)="actionPerform('linkSelection')"> insert_link</mat-icon>
+        <mat-icon (click)="actionPerform('insertUnorderedList')" class="insertUnorderedList"> format_list_bulleted</mat-icon>
+        <mat-icon (click)="actionPerform('insertOrderedList')" class="insertOrderedList"> format_list_numbered</mat-icon>
+      </div>
+  
+      <div class="dropdown">
+        <button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+        @if (langField === 'en') {
+          <img src="../../assets/icons/english.png" alt="" width="25px" height="25px">
+        }
+        @else {
+          <img src="../../assets/icons/arabic.png" alt="" width="25px" height="25px">
+        }
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+          <button class="btn w-100" [ngStyle]="{'border-color': langField === 'en' ? '#3779EB' : ''}" (click)="onLangSelection('en')">
+            <img src="../../assets/icons/english.png" alt="" width="25px" height="25px">
+          </button>
+        </li>
+        <li>
+          <button class="btn w-100" [ngStyle]="{'border-color': langField === 'ar' ? '#3779EB' : ''}" (click)="onLangSelection('ar')">
+            <img src="../../assets/icons/arabic.png" alt="" width="25px" height="25px">
+          </button>
+        </li>
+      </ul>
+      </div>
+    </div>
+  
+    <editor-root [langField]="langField" [actionCommandWrapper]="actionCommandWrapper" (activeEmitter)="activeAction($event)"></editor-root>
+  </div>

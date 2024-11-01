@@ -1,0 +1,33 @@
+.text-input-field {
+    height: 50px !important;
+}
+
+
+.remaning{
+    margin-top: 5px;
+    color: #9f9f9f;
+    font-size: 12px;
+}
+
+span{
+    font-size: 1rem;
+}
+
+.main-container{
+    margin: 5% 10%;
+    width: 80%;
+    .header{
+        border: 1px solid #d7d7d7;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        background: #f3f3f3;
+        mat-icon:hover{
+            cursor: pointer;
+        }
+        .dropdown{
+            margin-left: auto;
+            border-left: 1px solid #d7d7d7;;
+        }
+    }
+}

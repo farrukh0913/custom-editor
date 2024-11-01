@@ -1,53 +1,31 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { EditorComponent } from './components/editor.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule, MatIconModule, EditorComponent],
+  imports: [CommonModule, RouterOutlet, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 
 export class AppComponent {
-  langField: string = 'en';
-  actionCommand: string = '';
+  
+  constructor(public authService: AuthService, private route: Router) { }
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
-
-  onLangSelection(selectedLanguage: string){
-    this.actionCommand = '';
-    this.langField = selectedLanguage;
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.route.navigate(['/home']);
+    }
   }
 
-  onBoldSelecttion(){
-    this.actionCommand = 'bold';
-  }
-
-  onUnderlineSelection(){
-    this.actionCommand = 'underline';
-  }
-
-  onLinkSelection(){
-    this.actionCommand = 'linkSelection';
-  }
-
-  onBulletSelecttion(){
-    this.actionCommand = 'insertUnorderedList';
-  }
-
-  onNumberBulletSelecttion(){
-    this.actionCommand = 'insertOrderedList';
-  }
-
-  activeAction(event: any) {
-    this.renderer.setStyle(this.el.nativeElement.querySelector('.bold'), 'color', event.bold ? '#1469C0' : '');
-    this.renderer.setStyle(this.el.nativeElement.querySelector('.underline'), 'color', event.underline ? '#1469C0' : '');
-    this.renderer.setStyle(this.el.nativeElement.querySelector('.insertUnorderedList'), 'color', event.insertUnorderedList ? '#1469C0' : '');
-    this.renderer.setStyle(this.el.nativeElement.querySelector('.insertOrderedList'), 'color', event.insertOrderedList ? '#1469C0' : '');
+  logout() {
+    localStorage.removeItem("token");
+    this.route.navigate(['/login']);
   }
 }

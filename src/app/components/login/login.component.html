@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h1>Login</h1>
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" formControlName="email" aria-describedby="emailHelp"
+                            placeholder="Enter email">
+                            @if ((email?.hasError('required') && email?.touched) || (email?.hasError('email') && email?.dirty) || (formSubmitted && !email?.value)) {
+                                <span class="text-danger">
+                                    Email is required and must be a valid email address
+                                </span>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" formControlName="password" placeholder="Password">
+                            @if ((password?.hasError('required') && password?.touched) || (formSubmitted && !password?.value)) {
+                                <span class="text-danger">
+                                    Password is required
+                                </span>
+                            }
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

@@ -15,8 +15,8 @@ import { TranslationService } from '../translation.service';
 export class EditorComponent {
   @ViewChild('editor') editorRef!: ElementRef<HTMLDivElement>;
   @Input() langField = 'en';
-  @Input() actionCommand = '';
   @Output() activeEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Input() actionCommandWrapper!: { value: string };
 
   inputTextAreaText: string = "";
   inputFieldText: string = "";
@@ -43,28 +43,28 @@ export class EditorComponent {
 
   constructor(private readonly translationService: TranslationService) {}
 
-  ngDoCheck() {
-    if (this.actionCommand){
-      if (this.actionCommand === 'linkSelection'){
-        this.insertLink();
-      } else {
-        this.formatText(this.actionCommand);
-        this.commandState = {
-          bold: document.queryCommandState('bold'),
-          underline: document.queryCommandState('underline'),
-          insertUnorderedList: document.queryCommandState('insertUnorderedList'),
-          insertOrderedList: document.queryCommandState('insertOrderedList')
-        }
-        this.activeEmitter.emit(this.commandState);
-      }
-    }
-  }
-
 /**
  * get changed variables coming from parent component
  * @param changes Changes in input decorators
  */
   ngOnChanges(changes: SimpleChanges) {
+    if (changes['actionCommandWrapper']) {
+      const actionCommand = changes['actionCommandWrapper'].currentValue.value;
+      if (actionCommand){
+        if (actionCommand === 'linkSelection'){
+          this.insertLink();
+        } else {
+          this.formatText(actionCommand);
+          this.commandState = {
+            bold: document.queryCommandState('bold'),
+            underline: document.queryCommandState('underline'),
+            insertUnorderedList: document.queryCommandState('insertUnorderedList'),
+            insertOrderedList: document.queryCommandState('insertOrderedList')
+          }
+          this.activeEmitter.emit(this.commandState);
+        }
+      }
+    }
     //    * On language change for Text Area field
     if(this.editorRef?.nativeElement.innerText && this.langField !== this.previousLang){
       let content = `<p>${this.editorRef?.nativeElement.innerHTML}</p>`;
